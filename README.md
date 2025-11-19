@@ -17,7 +17,7 @@ used by MPSG GIS staff.
 
 **Depends:** R (\>= 4.1.0)
 
-**Imports:** arcgislayers, dplyr, httr2, janitor, lubridate, sf, stringr, terra, tibble, tidyr, tidyselect
+**Imports:** arcgislayers, dplyr, glue, janitor, sf, tidyselect
     
 **Issues:** This package is under active development and changes often with out 
 warning. Functions may experience breaking changes at any time. If you find a 

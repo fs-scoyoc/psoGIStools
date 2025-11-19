@@ -52,3 +52,6 @@ rsconnect/
 # scripts
 pkg_dev.R
 .Rproj.user
+
+# directories
+/inst

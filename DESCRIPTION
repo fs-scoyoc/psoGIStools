@@ -13,12 +13,10 @@ Depends: R (>= 4.1.0)
 Imports: 
     arcgislayers,
     dplyr,
-    httr2,
+    glue,
     janitor,
-    lubridate,
     sf,
-    stringr,
-    terra,
-    tibble,
-    tidyr,
     tidyselect
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
