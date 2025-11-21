@@ -34,6 +34,8 @@ devtools::install_github("fs-scoyoc/mpsgGIStools")
 
 ## List of Functions
 
--   `function1`: Function description.
+-   `clip_sf()`: transform a `sf` object and clip it using `sf::st_intersection()`.
+-   `read_edw_lyr`: read an ArcGIS Enterprise Data Warehouse layer into R as an `sf` object.
+-   `read_fc`: read a file geodatabase feature class into R as an `sf` object.
 
--   `function2`: Function description.
+
