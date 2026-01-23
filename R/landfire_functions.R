@@ -23,7 +23,7 @@
 #' # Get LANDFIRE EVT data
 #' lf_plan_area <- get_landfire(plan_area, file.path("data", "landfire"), 
 #'                              "your.name@usda.gov")
-get_landfire <- function(aoi_polygon, lf_dir, email_address, res = 30){
+get_landfire_evt <- function(aoi_polygon, lf_dir, email_address, res = 30){
   # aoi_polygon = targets::tar_read(plan_area)
   # lf_dir = file.path("data", "LANDFIRE")
   # email_address = Sys.getenv("GBIF_EMAIL")
