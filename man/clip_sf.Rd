@@ -35,6 +35,6 @@ roads <- read_fc(lyr_name = "AreaRoads", dsn = gdb_path, crs = "NAD83")
 plan_area_roads <- clip_fc(roads, roads)
 }
 \seealso{
-\code{\link[=read_fc]{read_fc()}}, \code{\link[sf:geos_binary_ops]{sf::st_intersection()}},
+\code{\link[mpsgGIStools:read_fc]{mpsgGIStools::read_fc()}}, \code{\link[sf:geos_binary_ops]{sf::st_intersection()}},
 \code{\link[sf:st_transform]{sf::st_transform()}}
 }

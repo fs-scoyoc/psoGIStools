@@ -1,4 +1,4 @@
-Package: mpsgGIStools
+Package: gis_tools
 Title: GIS Tools Used by MPSG Staff
 Version: 0.0.9
 Authors@R: 

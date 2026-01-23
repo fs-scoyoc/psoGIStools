@@ -1,4 +1,4 @@
-# mpsgGIStools
+# gis_tools
 
 ## Overview
 
@@ -13,7 +13,7 @@ used by MPSG GIS staff.
 
 **Version:** 0.0.1
 
-**License:** Mit + file [LICENSE](https://github.com/fs-scoyoc/mpsgGIStools/blob/main/LICENSE.md)
+**License:** Mit + file [LICENSE](https://github.com/fs-scoyoc/gis_tools/blob/main/LICENSE.md)
 
 **Depends:** R (\>= 4.1.0)
 
@@ -22,20 +22,21 @@ used by MPSG GIS staff.
 **Issues:** This package is under active development and changes often with out 
 warning. Functions may experience breaking changes at any time. If you find a 
 bug or have an idea for a feature, please submit an Issue at 
-<https://github.com/fs-scoyoc/mpsgGIStools/issues>.
+<https://github.com/fs-scoyoc/gis_tools/issues>.
 
-**Documentation:** Just man pages for now.
+**Documentation:** Just the man pages for now.
 
 ## Installation
 
 ``` r
-devtools::install_github("fs-scoyoc/mpsgGIStools")
+devtools::install_github("fs-scoyoc/gis_tools")
 ```
 
 ## List of Functions
 
 -   `clip_sf()`: transform a `sf` object and clip it using `sf::st_intersection()`.
--   `read_edw_lyr`: read an ArcGIS Enterprise Data Warehouse layer into R as an `sf` object.
--   `read_fc`: read a file geodatabase feature class into R as an `sf` object.
 
+-   `read_edw_lyr`: read an ArcGIS Enterprise Data Warehouse layer into R as an `sf` object.
+
+-   `read_fc`: read a file geodatabase feature class into R as an `sf` object.
 
