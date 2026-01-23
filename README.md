@@ -1,4 +1,4 @@
-# gis_tools
+# GIStools R Package
 
 ## Overview
 
