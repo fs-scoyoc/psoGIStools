@@ -36,9 +36,9 @@ devtools::install_github("fs-scoyoc/GIStools")
 
 -   `clip_sf()`: transform a `sf` object and clip it using `sf::st_intersection()`.
 
--   `get_landfire_evt`: download LANDFIRE Existing Vegetation Type (250EVT) using the `rlandfire` package.
+-   `get_landfire()`: download LANDFIRE Existing Vegetation Type (250EVT) using the `rlandfire` package.
 
--   `read_edw_lyr`: read an ArcGIS Enterprise Data Warehouse layer into R as an `sf` object.
+-   `read_edw_lyr()`: read an ArcGIS Enterprise Data Warehouse layer into R as an `sf` object.
 
--   `read_fc`: read a file geodatabase feature class into R as an `sf` object.
+-   `read_fc()`: read a file geodatabase feature class into R as an `sf` object.
 
