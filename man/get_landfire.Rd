@@ -15,7 +15,8 @@ get_landfire(
 \arguments{
 \item{aoi_polygon}{Area of interest \code{sf} polygon object.}
 
-\item{lf_products}{Vector of LANDFIRE products. See (Products Table)\url{https://lfps.usgs.gov/products}. Defult is \verb{250EVT}.}
+\item{lf_products}{Vector of LANDFIRE products. See
+\url{https://lfps.usgs.gov/products}. Defult is \verb{250EVT}.}
 
 \item{lf_dir}{Directory path to save raster to.}
 

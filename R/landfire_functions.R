@@ -5,7 +5,8 @@
 #'     table as a list.
 #'
 #' @param aoi_polygon Area of interest `sf` polygon object.
-#' @param lf_products Vector of LANDFIRE products. See (Products Table)<https://lfps.usgs.gov/products>. Defult is `250EVT`.
+#' @param lf_products Vector of LANDFIRE products. See 
+#'     <https://lfps.usgs.gov/products>. Defult is `250EVT`.
 #' @param lf_dir Directory path to save raster to.
 #' @param email_address Email address. Passesd on to [rlandfire::landfireAPIv2()].
 #' @param res Raster resolution. Default is 30.
