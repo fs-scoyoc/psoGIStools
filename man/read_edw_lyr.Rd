@@ -22,7 +22,7 @@ Directory, https://apps.fs.usda.gov/arcx/rest/services/EDW, using the
 \code{arcgislayers} package.
 }
 \examples{
-library(mpsgGIStools)
+library("GIStools")
 
 # Administrative Boundary for the Dixie National Forest
 admin_bndry <- read_edw_lyr("EDW_ForestSystemBoundaries_01", layer = 1) |>

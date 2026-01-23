@@ -15,14 +15,13 @@
 #' @export
 #'
 #' @examples
-#' library("mpsgGIStools")
+#' library("GIStools")
 #'
 #' # Read spatial data into R
 #' t_path <- file.path("T:/path/to/project/directory")
 #' gdb_path <- file.path(t_path, "GIS_Data.gdb")
 #' plan_area <- read_fc(lyr_name = "PlanArea", dsn = gdb_path, crs = "NAD83")
 #' roads <- read_fc(lyr_name = "AreaRoads", dsn = gdb_path, crs = "NAD83")
-#'
 #'
 #' # Clip to extents
 #' plan_area_roads <- clip_fc(roads, roads)

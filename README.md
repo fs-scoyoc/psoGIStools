@@ -17,7 +17,7 @@ used by MPSG GIS staff.
 
 **Depends:** R (\>= 4.1.0)
 
-**Imports:** arcgislayers, dplyr, glue, janitor, sf, tidyselect
+**Imports:** arcgislayers, dplyr, foreign, glue, janitor, rlandfire, sf, terra, tidyselect
     
 **Issues:** This package is under active development and changes often with out 
 warning. Functions may experience breaking changes at any time. If you find a 
@@ -35,6 +35,8 @@ devtools::install_github("fs-scoyoc/gis_tools")
 ## List of Functions
 
 -   `clip_sf()`: transform a `sf` object and clip it using `sf::st_intersection()`.
+
+-   `get_landfire`: download LANDFIRE Existing Vegetation Type (250EVT) using the `rlandfire` package.
 
 -   `read_edw_lyr`: read an ArcGIS Enterprise Data Warehouse layer into R as an `sf` object.
 

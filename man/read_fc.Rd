@@ -26,7 +26,7 @@ the feature class is in the target coordinate reference system (CRS) and
 will transform the feature to the target CRS if it is not.
 }
 \examples{
-library("mpsgGIStools")
+library("GIStools")
 
 read_fc(lyr_name = "feature_name",
         dsn = file.path("T:/path/to/geodatabase"),

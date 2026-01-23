@@ -13,9 +13,12 @@ Depends: R (>= 4.1.0)
 Imports: 
     arcgislayers,
     dplyr,
+    foreign,
     glue,
     janitor,
+    rlandfire,
     sf,
+    terra,
     tidyselect
 Suggests: 
     testthat (>= 3.0.0)

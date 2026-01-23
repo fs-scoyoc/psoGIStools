@@ -17,7 +17,7 @@
 #' @export
 #'
 #' @examples
-#' library("mpsgGIStools")
+#' library("GIStools")
 #'
 #' read_fc(lyr_name = "feature_name",
 #'         dsn = file.path("T:/path/to/geodatabase"),
