@@ -13,7 +13,7 @@ used by MPSG GIS staff.
 
 **Version:** 0.0.1
 
-**License:** Mit + file [LICENSE](https://github.com/fs-scoyoc/gis_tools/blob/main/LICENSE.md)
+**License:** Mit + file [LICENSE](https://github.com/fs-scoyoc/GIStools/blob/main/LICENSE.md)
 
 **Depends:** R (\>= 4.1.0)
 
@@ -22,14 +22,14 @@ used by MPSG GIS staff.
 **Issues:** This package is under active development and changes often with out 
 warning. Functions may experience breaking changes at any time. If you find a 
 bug or have an idea for a feature, please submit an Issue at 
-<https://github.com/fs-scoyoc/gis_tools/issues>.
+<https://github.com/fs-scoyoc/GIStools/issues>.
 
 **Documentation:** Just the man pages for now.
 
 ## Installation
 
 ``` r
-devtools::install_github("fs-scoyoc/gis_tools")
+devtools::install_github("fs-scoyoc/GIStools")
 ```
 
 ## List of Functions
