@@ -17,6 +17,7 @@
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' ## Not run:
 #' library("psoGIStools")
 #'
@@ -24,6 +25,7 @@
 #'                   dsn = file.path("T:/path/to/geodatabase"),
 #'                   crs = "NAD83")
 #' ## Run:
+#' }
 read_fc <- function(lyr_name, dsn, crs = NULL){
   fc = sf::read_sf(layer = lyr_name, dsn = dsn) |> sf::st_make_valid()
   if(!is.null(crs)){fc = sf::st_transform(fc, crs = crs)}

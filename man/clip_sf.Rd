@@ -22,6 +22,7 @@ transforms the clipping object to CRS of the input object using
 \code{sf::st_transform()}before clipping. The output CRS is not changed.
 }
 \examples{
+\dontrun{
 ## Not run:
 library("psoGIStools")
 library("dplyr")
@@ -36,6 +37,7 @@ rec_sites <- read_edw_lyr("EDW_InfraRecreationSites_01")
 #-- Clip rec sites to forest boundary
 fif_rec_sties <- clip_sf(rec_sites, fif)
 ## Run:
+}
 }
 \seealso{
 \code{\link[=read_fc]{read_fc()}}, \code{\link[sf:geos_binary_ops]{sf::st_intersection()}}, \code{\link[sf:st_transform]{sf::st_transform()}}

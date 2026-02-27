@@ -14,6 +14,7 @@
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' ## Not run:
 #' library("psoGIStools")
 #' library("dplyr")
@@ -28,6 +29,7 @@
 #' #-- Clip rec sites to forest boundary
 #' fif_rec_sties <- clip_sf(rec_sites, fif)
 #' ## Run:
+#' }
 clip_sf <- function(input_feature, clip_feature){
 
   # Transform clipping layer

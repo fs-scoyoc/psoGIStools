@@ -30,6 +30,7 @@ REST Service, https://apps.fs.usda.gov/arcn/rest/services/EDW, using the
 data from the interal ArcGIS REST Service.
 }
 \examples{
+\dontrun{
 ## Not run:
 library("psoGIStools")
 library("dplyr")
@@ -41,6 +42,7 @@ mbf <- read_edw_lyr("EDW_ForestSystemBoundaries_01") |>
 inv_plant <- read_edw_lyr("EDW_BioInvasivePlant_01", layer = 1, service = "arcn") |> 
   clip_sf(mbf)
 ## Run:
+}
 }
 \seealso{
 \code{\link[arcgislayers:arc_read]{arcgislayers::arc_read()}}, \code{\link[sf:st_transform]{sf::st_transform()}}
