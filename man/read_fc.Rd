@@ -17,7 +17,7 @@ read_fc(lyr_name, dsn, crs = NULL)
 If NULL, resulting \link[sf:sf]{sf::sf} object will not be transformed.}
 }
 \value{
-sf object
+\code{sf} object
 }
 \description{
 This function uses the \code{sf} package to read a feature class into R from a
@@ -26,11 +26,11 @@ the feature class is in the target coordinate reference system (CRS) and
 will transform the feature to the target CRS if it is not.
 }
 \examples{
-library("GIStools")
+library("psoGIStools")
 
-read_fc(lyr_name = "feature_name",
-        dsn = file.path("T:/path/to/geodatabase"),
-        crs = "NAD83")
+dat_sf <- read_fc(lyr_name = "feature_name",
+                  dsn = file.path("T:/path/to/geodatabase"),
+                  crs = "NAD83")
 }
 \seealso{
 \code{\link[sf:st_read]{sf::read_sf()}}, \code{\link[sf:st_transform]{sf::st_transform()}}

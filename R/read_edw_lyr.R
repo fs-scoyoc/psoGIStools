@@ -12,7 +12,7 @@
 #' @param service Character. The public ("arcx") or internal ("arcn") ArcGIS 
 #'     REST Service code. Default is "arcx". You must be on a Forest Service 
 #'     network for "arcn" to work.
-#' @param target_crs Coordinate reference system (crs). Default is EPSG:4326 
+#' @param crs Coordinate reference system (crs). Default is EPSG:4326 
 #'      (WGS 84).
 #'
 #' @return An [sf] object or [terra::SpatRaster-class].
@@ -20,22 +20,25 @@
 #' @export
 #' 
 #' @examples
-#' library(mpsgSE)
+#' library("psoGIStools")
+#' library("dplyr")
 #' 
-#' # Administrative Boundary for the Dixie National Forest
-#' admin_bndry <- read_edw_lyr("EDW_ForestSystemBoundaries_01", layer = 1) |> 
-#'   dplyr::filter(forestname == "Dixie National Forest")
+#' # Administrative Boundary for the Medicine Bow National Forest
+#' mbf <- read_edw_lyr("EDW_ForestSystemBoundaries_01") |> 
+#'   filter(forestname == "Medicine Bow National Forest")
 #' 
+#' inv_plant <- read_edw_lyr("EDW_BioInvasivePlant_01", layer = 1, service = "arcn") |> 
+#'   clip_sf(mbf)
 read_edw_lyr <- function(map_name, layer = 0, service = "arcx", 
                          crs = "EPSG:4326"){
   
   # map_name = "EDW_BioTESP_01"; layer = 1; service = "arcn"
   # map_name = "EDW_ForestSystemBoundaries_01"; layer = 0; service = "arcx"
   
-  edw_rest <- glue::glue("https://apps.fs.usda.gov/{service}/rest/services/EDW/")
+  edw_rest = glue::glue("https://apps.fs.usda.gov/{service}/rest/services/EDW/")
   lyr = arcgislayers::arc_read(
     glue::glue("{edw_rest}/{map_name}/MapServer/{layer}")
-  ) |>
+    ) |>
     janitor::clean_names() |> 
     sf::st_make_valid() |> 
     sf::st_transform(crs = crs)

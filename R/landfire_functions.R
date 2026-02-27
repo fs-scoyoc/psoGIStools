@@ -1,36 +1,37 @@
 #' Download LANDFIRE Existing Vegetation Type (250EVT)
 #' 
 #' This function downloads and saves LANDFIRE raster data using the `rlandfire` 
-#'     package and the raster data masked to the AoI polygon and the attribute 
-#'     table as a list.
+#'     package and the raster data masked to an area of interest polygon. NOTE: 
+#'     This function has not been tested for more than one LANDFIRE product.
 #'
 #' @param aoi_polygon Area of interest `sf` polygon object.
-#' @param lf_products Vector of LANDFIRE products. See 
-#'     <https://lfps.usgs.gov/products>. Defult is `250EVT`.
+#' @param lf_products Vector of LANDFIRE products. Defult is `250EVT`. See 
+#'     <https://lfps.usgs.gov/products> for available products. 
 #' @param lf_dir Directory path to save raster to.
-#' @param email_address Email address. Passesd on to [rlandfire::landfireAPIv2()].
+#' @param email_address Email address. Passed on to [rlandfire::landfireAPIv2()].
 #' @param res Raster resolution. Default is 30.
 #'
-#' @returns A list of two data frames summarizing area of EVT.
+#' @returns A list containing 1) the masked raster and 2) the attribute table 
+#'     for the masked raster.
 #' @export
 #'
 #' @examples
-#' library("GIStools")
+#' library("psoGIStools")
+#' library("dplyr")
 #'
-#' # Read spatial data into R
-#' t_path <- file.path("T:/path/to/project/directory")
-#' gdb_path <- file.path(t_path, "GIS_Data.gdb")
-#' plan_area <- read_fc(lyr_name = "PlanArea", dsn = gdb_path)
+#' #-- Read spatial data into R
+#' # Fishlake National Forest Adminstrative Boundary
+#' dif <- read_edw_lyr("EDW_ForestSystemBoundaries_01") |>
+#'   filter(forestname == "Dixie National Forest")
 #' 
 #' # Get LANDFIRE EVT data
-#' lf_plan_area <- get_landfire(plan_area, file.path("data", "landfire"), 
-#'                              "your.name@usda.gov")
+#' evt_dif <- get_landfire(dif, file.path("data", "landfire"), "your.name@usda.gov")
 get_landfire <- function(aoi_polygon, lf_products = "250EVT", lf_dir, 
                              email_address, res = 30){
   # aoi_polygon = targets::tar_read(plan_area)
   # lf_dir = file.path("data", "LANDFIRE")
   # email_address = Sys.getenv("GBIF_EMAIL")
-
+  
   # Create directory if it does not exist
   if(!dir.exists(lf_dir)) dir.create(lf_dir)
   # Transform AoA to WGS 84

@@ -7,12 +7,12 @@
 clip_sf(input_feature, clip_feature)
 }
 \arguments{
-\item{input_feature}{Spatial feature (\code{sf} object) to be clipped.}
+\item{input_feature}{Input spatial feature (\code{sf} object) to be clipped.}
 
 \item{clip_feature}{Polygon feature (\code{sf}) used to clip \code{input_feature}.}
 }
 \value{
-An \link[sf:sf]{sf::sf} object
+An \link[sf:sf]{sf::sf} object.
 }
 \description{
 This function clips a \code{sf} object using \code{sf::st_intersection()}. First, this
@@ -22,18 +22,19 @@ transforms the clipping object to CRS of the input object using
 \code{sf::st_transform()}before clipping. The output CRS is not changed.
 }
 \examples{
-library("GIStools")
+library("psoGIStools")
+library("dplyr")
 
-# Read spatial data into R
-t_path <- file.path("T:/path/to/project/directory")
-gdb_path <- file.path(t_path, "GIS_Data.gdb")
-plan_area <- read_fc(lyr_name = "PlanArea", dsn = gdb_path, crs = "NAD83")
-roads <- read_fc(lyr_name = "AreaRoads", dsn = gdb_path, crs = "NAD83")
+#-- Read spatial data into R
+# Fishlake National Forest Adminstrative Boundary
+fif <- read_edw_lyr("EDW_ForestSystemBoundaries_01") |>
+  filter(forestname == "Fishlake National Forest")
+# Recreation Sites
+rec_sites <- read_edw_lyr("EDW_InfraRecreationSites_01")
 
-# Clip to extents
-plan_area_roads <- clip_fc(roads, roads)
+#-- Clip rec sites to forest boundary
+fif_rec_sties <- clip_sf(rec_sites, fif)
 }
 \seealso{
-\code{\link[mpsgGIStools:read_fc]{mpsgGIStools::read_fc()}}, \code{\link[sf:geos_binary_ops]{sf::st_intersection()}},
-\code{\link[sf:st_transform]{sf::st_transform()}}
+\code{\link[=read_fc]{read_fc()}}, \code{\link[sf:geos_binary_ops]{sf::st_intersection()}}, \code{\link[sf:st_transform]{sf::st_transform()}}
 }

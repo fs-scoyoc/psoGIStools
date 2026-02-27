@@ -15,32 +15,33 @@ get_landfire(
 \arguments{
 \item{aoi_polygon}{Area of interest \code{sf} polygon object.}
 
-\item{lf_products}{Vector of LANDFIRE products. See
-\url{https://lfps.usgs.gov/products}. Defult is \verb{250EVT}.}
+\item{lf_products}{Vector of LANDFIRE products. Defult is \verb{250EVT}. See
+\url{https://lfps.usgs.gov/products} for available products.}
 
 \item{lf_dir}{Directory path to save raster to.}
 
-\item{email_address}{Email address. Passesd on to \code{\link[rlandfire:landfireAPIv2]{rlandfire::landfireAPIv2()}}.}
+\item{email_address}{Email address. Passed on to \code{\link[rlandfire:landfireAPIv2]{rlandfire::landfireAPIv2()}}.}
 
 \item{res}{Raster resolution. Default is 30.}
 }
 \value{
-A list of two data frames summarizing area of EVT.
+A list containing 1) the masked raster and 2) the attribute table
+for the masked raster.
 }
 \description{
 This function downloads and saves LANDFIRE raster data using the \code{rlandfire}
-package and the raster data masked to the AoI polygon and the attribute
-table as a list.
+package and the raster data masked to an area of interest polygon. NOTE:
+This function has not been tested for more than one LANDFIRE product.
 }
 \examples{
-library("GIStools")
+library("psoGIStools")
+library("dplyr")
 
-# Read spatial data into R
-t_path <- file.path("T:/path/to/project/directory")
-gdb_path <- file.path(t_path, "GIS_Data.gdb")
-plan_area <- read_fc(lyr_name = "PlanArea", dsn = gdb_path)
+#-- Read spatial data into R
+# Fishlake National Forest Adminstrative Boundary
+dif <- read_edw_lyr("EDW_ForestSystemBoundaries_01") |>
+  filter(forestname == "Dixie National Forest")
 
 # Get LANDFIRE EVT data
-lf_plan_area <- get_landfire(plan_area, file.path("data", "landfire"), 
-                             "your.name@usda.gov")
+evt_dif <- get_landfire(dif, file.path("data", "landfire"), "your.name@usda.gov")
 }

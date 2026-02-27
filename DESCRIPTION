@@ -1,10 +1,10 @@
-Package: GIStools
-Title: GIS Tools Used by MPSG Staff
+Package: psoGIStools
+Title: GIS Tools Used by PSO Staff
 Version: 0.0.9
 Authors@R: 
     person("Matthew", "Van Scoyoc", , "matthew.vanscoyoc@usda.gov", 
            role = c("aut", "cre"), comment = c(ORCID = "0000-0001-6821-4476"))
-Description: GIS tools commonly used by MPSG staff.
+Description: GIS tools commonly used by PSO staff.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

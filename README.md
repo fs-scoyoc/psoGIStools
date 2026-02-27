@@ -1,11 +1,10 @@
-# GIStools R Package
+# Planning Service Organization GIS Tools (psoGIStools) R Package
 
 ## Overview
 
-Welcome to the Mountain Planning Service Group (MPSG; USDA Forest Service) 
+Welcome to the Planning Service Organization (PSO; USDA Forest Service) 
 GIS Tools R package.
-This package has been developed by MPSG staff to standardize common GIS tasks 
-used by MPSG GIS staff.
+This package has been developed by PSO staff to standardize common GIS tasks.
 
 **Author:** [Matt Van Scoyoc](https://github.com/fs-scoyoc)
 
@@ -29,16 +28,18 @@ bug or have an idea for a feature, please submit an Issue at
 ## Installation
 
 ``` r
-devtools::install_github("fs-scoyoc/GIStools")
+devtools::install_github("fs-scoyoc/psoGIStools")
 ```
 
 ## List of Functions
 
--   `clip_sf()`: transform a `sf` object and clip it using `sf::st_intersection()`.
+-   `clip_sf()`: lip a `sf` object, just like in ArcGIS.
 
--   `get_landfire()`: download LANDFIRE Existing Vegetation Type (250EVT) using the `rlandfire` package.
+-   `get_landfire()`: download LANDFIRE Existing Vegetation Type (250EVT) using 
+the `rlandfire` package.
 
--   `read_edw_lyr()`: read an ArcGIS Enterprise Data Warehouse layer into R as an `sf` object.
+-   `read_edw_lyr()`: read data from the public (arcx) or internal (arcn) Forest 
+Service ArcGIS REST Services.
 
--   `read_fc()`: read a file geodatabase feature class into R as an `sf` object.
+-   `read_fc()`: read a feature class into R from geodatabase.
 

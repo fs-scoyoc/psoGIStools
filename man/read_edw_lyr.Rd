@@ -15,7 +15,7 @@ read_edw_lyr(map_name, layer = 0, service = "arcx", crs = "EPSG:4326")
 REST Service code. Default is "arcx". You must be on a Forest Service
 network for "arcn" to work.}
 
-\item{target_crs}{Coordinate reference system (crs). Default is EPSG:4326
+\item{crs}{Coordinate reference system (crs). Default is EPSG:4326
 (WGS 84).}
 }
 \value{
@@ -30,12 +30,15 @@ REST Service, https://apps.fs.usda.gov/arcn/rest/services/EDW, using the
 data from the interal ArcGIS REST Service.
 }
 \examples{
-library(mpsgSE)
+library("psoGIStools")
+library("dplyr")
 
-# Administrative Boundary for the Dixie National Forest
-admin_bndry <- read_edw_lyr("EDW_ForestSystemBoundaries_01", layer = 1) |> 
-  dplyr::filter(forestname == "Dixie National Forest")
+# Administrative Boundary for the Medicine Bow National Forest
+mbf <- read_edw_lyr("EDW_ForestSystemBoundaries_01") |> 
+  filter(forestname == "Medicine Bow National Forest")
 
+inv_plant <- read_edw_lyr("EDW_BioInvasivePlant_01", layer = 1, service = "arcn") |> 
+  clip_sf(mbf)
 }
 \seealso{
 \code{\link[arcgislayers:arc_read]{arcgislayers::arc_read()}}, \code{\link[sf:st_transform]{sf::st_transform()}}

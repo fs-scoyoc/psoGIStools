@@ -12,16 +12,16 @@
 #'   "WGS84" or "NAD83"). See [sf::st_crs()] for more details. Default is NULL.
 #'   If NULL, resulting [sf] object will not be transformed.
 #'
-#' @return sf object
+#' @return `sf` object
 #' @seealso [sf::read_sf()], [sf::st_transform()]
 #' @export
 #'
 #' @examples
-#' library("GIStools")
+#' library("psoGIStools")
 #'
-#' read_fc(lyr_name = "feature_name",
-#'         dsn = file.path("T:/path/to/geodatabase"),
-#'         crs = "NAD83")
+#' dat_sf <- read_fc(lyr_name = "feature_name",
+#'                   dsn = file.path("T:/path/to/geodatabase"),
+#'                   crs = "NAD83")
 read_fc <- function(lyr_name, dsn, crs = NULL){
   fc = sf::read_sf(layer = lyr_name, dsn = dsn) |> sf::st_make_valid()
   if(!is.null(crs)){fc = sf::st_transform(fc, crs = crs)}
