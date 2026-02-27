@@ -38,6 +38,8 @@ devtools::install_github("fs-scoyoc/psoGIStools")
 -   `get_landfire()`: download LANDFIRE Existing Vegetation Type (250EVT) using 
 the `rlandfire` package.
 
+-   `pull_nwi_data()`: Read FWS National Wetlands Inventory data into R.
+
 -   `read_edw_lyr()`: read data from the public (arcx) or internal (arcn) Forest 
 Service ArcGIS REST Services.
 

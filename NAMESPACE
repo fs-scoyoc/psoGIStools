@@ -2,5 +2,6 @@
 
 export(clip_sf)
 export(get_landfire)
+export(pull_nwi_data)
 export(read_edw_lyr)
 export(read_fc)
