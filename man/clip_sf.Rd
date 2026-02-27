@@ -23,7 +23,6 @@ transforms the clipping object to CRS of the input object using
 }
 \examples{
 \dontrun{
-## Not run:
 library("psoGIStools")
 library("dplyr")
 
@@ -36,7 +35,6 @@ rec_sites <- read_edw_lyr("EDW_InfraRecreationSites_01")
 
 #-- Clip rec sites to forest boundary
 fif_rec_sties <- clip_sf(rec_sites, fif)
-## Run:
 }
 }
 \seealso{

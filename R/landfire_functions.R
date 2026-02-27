@@ -17,7 +17,6 @@
 #'
 #' @examples
 #' \dontrun{
-#' ## Not run:
 #' library("psoGIStools")
 #' library("dplyr")
 #'
@@ -29,7 +28,6 @@
 #' # Get LANDFIRE EVT data
 #' evt_dif <- get_landfire(dif, lf_dir = file.path("data", "landfire"), 
 #'                         email = "your.name@usda.gov")
-#' ## Run:
 #' }
 get_landfire <- function(aoi_polygon, lf_dir, email, lf_products = "250EVT", 
                          res = 30){

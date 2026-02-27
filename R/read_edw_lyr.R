@@ -21,7 +21,6 @@
 #' 
 #' @examples
 #' \dontrun{
-#' ## Not run:
 #' library("psoGIStools")
 #' library("dplyr")
 #' 
@@ -31,7 +30,6 @@
 #' 
 #' inv_plant <- read_edw_lyr("EDW_BioInvasivePlant_01", layer = 1, service = "arcn") |> 
 #'   clip_sf(mbf)
-#' ## Run:
 #' }
 read_edw_lyr <- function(map_name, layer = 0, service = "arcx", 
                          crs = "EPSG:4326"){

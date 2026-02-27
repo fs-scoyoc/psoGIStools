@@ -18,13 +18,11 @@
 #'
 #' @examples
 #' \dontrun{
-#' ## Not run:
 #' library("psoGIStools")
 #'
 #' dat_sf <- read_fc(lyr_name = "feature_name",
 #'                   dsn = file.path("T:/path/to/geodatabase"),
 #'                   crs = "NAD83")
-#' ## Run:
 #' }
 read_fc <- function(lyr_name, dsn, crs = NULL){
   fc = sf::read_sf(layer = lyr_name, dsn = dsn) |> sf::st_make_valid()

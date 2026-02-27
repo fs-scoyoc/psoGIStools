@@ -29,7 +29,6 @@ This function has not been tested for more than one LANDFIRE product.
 }
 \examples{
 \dontrun{
-## Not run:
 library("psoGIStools")
 library("dplyr")
 
@@ -41,6 +40,5 @@ dif <- read_edw_lyr("EDW_ForestSystemBoundaries_01") |>
 # Get LANDFIRE EVT data
 evt_dif <- get_landfire(dif, lf_dir = file.path("data", "landfire"), 
                         email = "your.name@usda.gov")
-## Run:
 }
 }
