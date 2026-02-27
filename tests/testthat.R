@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/articles/special-files.html
 
 library(testthat)
-library(GIStools)
+library(psoGIStools)
 
-test_check("GIStools")
+test_check("psoGIStools")

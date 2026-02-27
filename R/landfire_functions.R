@@ -5,10 +5,10 @@
 #'     This function has not been tested for more than one LANDFIRE product.
 #'
 #' @param aoi_polygon Area of interest `sf` polygon object.
+#' @param lf_dir Directory path to save raster to.
+#' @param email Email address. Passed on to [rlandfire::landfireAPIv2()].
 #' @param lf_products Vector of LANDFIRE products. Defult is `250EVT`. See 
 #'     <https://lfps.usgs.gov/products> for available products. 
-#' @param lf_dir Directory path to save raster to.
-#' @param email_address Email address. Passed on to [rlandfire::landfireAPIv2()].
 #' @param res Raster resolution. Default is 30.
 #'
 #' @returns A list containing 1) the masked raster and 2) the attribute table 
@@ -16,6 +16,7 @@
 #' @export
 #'
 #' @examples
+#' ## Not run:
 #' library("psoGIStools")
 #' library("dplyr")
 #'
@@ -25,12 +26,14 @@
 #'   filter(forestname == "Dixie National Forest")
 #' 
 #' # Get LANDFIRE EVT data
-#' evt_dif <- get_landfire(dif, file.path("data", "landfire"), "your.name@usda.gov")
-get_landfire <- function(aoi_polygon, lf_products = "250EVT", lf_dir, 
-                             email_address, res = 30){
+#' evt_dif <- get_landfire(dif, lf_dir = file.path("data", "landfire"), 
+#'                         email = "your.name@usda.gov")
+#' ## Run:
+get_landfire <- function(aoi_polygon, lf_dir, email, lf_products = "250EVT", 
+                         res = 30){
   # aoi_polygon = targets::tar_read(plan_area)
   # lf_dir = file.path("data", "LANDFIRE")
-  # email_address = Sys.getenv("GBIF_EMAIL")
+  # email = Sys.getenv("GBIF_EMAIL")
   
   # Create directory if it does not exist
   if(!dir.exists(lf_dir)) dir.create(lf_dir)
@@ -41,7 +44,7 @@ get_landfire <- function(aoi_polygon, lf_products = "250EVT", lf_dir,
   lf_aoi = rlandfire::getAOI(aoa_sf)
   # Pull EVT data from LANDFIRE API
   resp = rlandfire::landfireAPIv2(products = lf_products, aoi = lf_aoi,
-                                  email_address, resolution = res,
+                                  email, resolution = res,
                                   path = tempfile(fileext = ".zip"),
                                   method = 'auto', verbose = FALSE)
   # Unzip raster and save to lf_dir

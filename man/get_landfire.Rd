@@ -4,23 +4,17 @@
 \alias{get_landfire}
 \title{Download LANDFIRE Existing Vegetation Type (250EVT)}
 \usage{
-get_landfire(
-  aoi_polygon,
-  lf_products = "250EVT",
-  lf_dir,
-  email_address,
-  res = 30
-)
+get_landfire(aoi_polygon, lf_dir, email, lf_products = "250EVT", res = 30)
 }
 \arguments{
 \item{aoi_polygon}{Area of interest \code{sf} polygon object.}
 
-\item{lf_products}{Vector of LANDFIRE products. Defult is \verb{250EVT}. See
-\url{https://lfps.usgs.gov/products} for available products.}
-
 \item{lf_dir}{Directory path to save raster to.}
 
-\item{email_address}{Email address. Passed on to \code{\link[rlandfire:landfireAPIv2]{rlandfire::landfireAPIv2()}}.}
+\item{email}{Email address. Passed on to \code{\link[rlandfire:landfireAPIv2]{rlandfire::landfireAPIv2()}}.}
+
+\item{lf_products}{Vector of LANDFIRE products. Defult is \verb{250EVT}. See
+\url{https://lfps.usgs.gov/products} for available products.}
 
 \item{res}{Raster resolution. Default is 30.}
 }
@@ -34,6 +28,7 @@ package and the raster data masked to an area of interest polygon. NOTE:
 This function has not been tested for more than one LANDFIRE product.
 }
 \examples{
+## Not run:
 library("psoGIStools")
 library("dplyr")
 
@@ -43,5 +38,7 @@ dif <- read_edw_lyr("EDW_ForestSystemBoundaries_01") |>
   filter(forestname == "Dixie National Forest")
 
 # Get LANDFIRE EVT data
-evt_dif <- get_landfire(dif, file.path("data", "landfire"), "your.name@usda.gov")
+evt_dif <- get_landfire(dif, lf_dir = file.path("data", "landfire"), 
+                        email = "your.name@usda.gov")
+## Run:
 }

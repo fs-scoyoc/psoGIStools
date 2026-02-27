@@ -26,11 +26,13 @@ the feature class is in the target coordinate reference system (CRS) and
 will transform the feature to the target CRS if it is not.
 }
 \examples{
+## Not run:
 library("psoGIStools")
 
 dat_sf <- read_fc(lyr_name = "feature_name",
                   dsn = file.path("T:/path/to/geodatabase"),
                   crs = "NAD83")
+## Run:
 }
 \seealso{
 \code{\link[sf:st_read]{sf::read_sf()}}, \code{\link[sf:st_transform]{sf::st_transform()}}
