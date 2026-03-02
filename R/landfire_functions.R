@@ -4,7 +4,7 @@
 #'     package and the raster data masked to an area of interest polygon. NOTE: 
 #'     This function has not been tested for more than one LANDFIRE product.
 #'
-#' @param aoi_polygon Area of interest `sf` polygon object.
+#' @param aoi_poly Area of interest `sf` polygon object.
 #' @param lf_dir Directory path to save raster to.
 #' @param email Email address. Passed on to [rlandfire::landfireAPIv2()].
 #' @param lf_products Vector of LANDFIRE products. Defult is `250EVT`. See 
@@ -29,16 +29,16 @@
 #' evt_dif <- get_landfire(dif, lf_dir = file.path("data", "landfire"), 
 #'                         email = "your.name@usda.gov")
 #' }
-get_landfire <- function(aoi_polygon, lf_dir, email, lf_products = "250EVT", 
+get_landfire <- function(aoi_poly, lf_dir, email, lf_products = "250EVT", 
                          res = 30){
-  # aoi_polygon = targets::tar_read(plan_area)
+  # aoi_poly = targets::tar_read(plan_area)
   # lf_dir = file.path("data", "LANDFIRE")
   # email = Sys.getenv("GBIF_EMAIL")
   
   # Create directory if it does not exist
   if(!dir.exists(lf_dir)) dir.create(lf_dir)
   # Transform AoA to WGS 84
-  aoa_sf = sf::st_buffer(aoi_polygon, 1000) |> 
+  aoa_sf = sf::st_buffer(aoi_poly, 1000) |> 
     sf::st_transform(crs = "epsg:4326")
   # Generate AoA wkt string
   lf_aoi = rlandfire::getAOI(aoa_sf)
@@ -54,7 +54,7 @@ get_landfire <- function(aoi_polygon, lf_dir, email, lf_products = "250EVT",
     list.files(lf_dir, pattern = ".tif$", full.names = TRUE, recursive = TRUE)
   )
   # Transform AoA to raster CRS
-  plan_area_proj = terra::vect(aoi_polygon) |> terra::project(terra::crs(lf))
+  plan_area_proj = terra::vect(aoi_poly) |> terra::project(terra::crs(lf))
   plan_area_proj$area_m2 = terra::expanse(plan_area_proj, unit = "m")
   plan_area_proj$acres = plan_area_proj$area_m2 / 4046.86
   

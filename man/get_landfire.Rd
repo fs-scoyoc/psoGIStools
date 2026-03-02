@@ -4,10 +4,10 @@
 \alias{get_landfire}
 \title{Download LANDFIRE Existing Vegetation Type (250EVT)}
 \usage{
-get_landfire(aoi_polygon, lf_dir, email, lf_products = "250EVT", res = 30)
+get_landfire(aoi_poly, lf_dir, email, lf_products = "250EVT", res = 30)
 }
 \arguments{
-\item{aoi_polygon}{Area of interest \code{sf} polygon object.}
+\item{aoi_poly}{Area of interest \code{sf} polygon object.}
 
 \item{lf_dir}{Directory path to save raster to.}
 
