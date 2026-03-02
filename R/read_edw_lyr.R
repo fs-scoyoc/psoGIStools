@@ -41,6 +41,7 @@ read_edw_lyr <- function(data_name, layer = 0, service = "arcx",
   lyr = arcgislayers::arc_open(
     glue::glue("{edw_rest}/{data_name}/MapServer/{layer}")
     ) |>
+    arcgislayers::arc_select() |> 
     janitor::clean_names() |> 
     sf::st_make_valid() |> 
     sf::st_transform(crs = crs)
