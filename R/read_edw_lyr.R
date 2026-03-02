@@ -7,7 +7,7 @@
 #'     `arcgislayers` package. You must be on a Forest Service network to access 
 #'     data from the interal ArcGIS REST Service.
 #'
-#' @param map_name Character. Name of map layer.
+#' @param data_name Character. Name of map layer.
 #' @param layer Integer. Number of layer to read. Default is  zero (0).
 #' @param service Character. The public ("arcx") or internal ("arcn") ArcGIS 
 #'     REST Service code. Default is "arcx". You must be on a Forest Service 
@@ -31,15 +31,15 @@
 #' inv_plant <- read_edw_lyr("EDW_BioInvasivePlant_01", layer = 1, service = "arcn") |> 
 #'   clip_sf(mbf)
 #' }
-read_edw_lyr <- function(map_name, layer = 0, service = "arcx", 
+read_edw_lyr <- function(data_name, layer = 0, service = "arcx", 
                          crs = "EPSG:4326"){
   
-  # map_name = "EDW_BioTESP_01"; layer = 1; service = "arcn"
-  # map_name = "EDW_ForestSystemBoundaries_01"; layer = 0; service = "arcx"
+  # data_name = "EDW_BioTESP_01"; layer = 1; service = "arcn"
+  # data_name = "EDW_ForestSystemBoundaries_01"; layer = 0; service = "arcx"
   
   edw_rest = glue::glue("https://apps.fs.usda.gov/{service}/rest/services/EDW/")
-  lyr = arcgislayers::arc_read(
-    glue::glue("{edw_rest}/{map_name}/MapServer/{layer}")
+  lyr = arcgislayers::arc_open(
+    glue::glue("{edw_rest}/{data_name}/MapServer/{layer}")
     ) |>
     janitor::clean_names() |> 
     sf::st_make_valid() |> 
