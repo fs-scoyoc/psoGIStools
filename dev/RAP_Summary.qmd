@@ -1,0 +1,403 @@
+---
+title: "Bridger-Teton National Forest RAP Data Summary"
+author: "Matthew Van Scoyoc"
+date: "`r format(Sys.time(), '%Y-%m-%d')`"
+format: 
+  docx:
+    toc: true
+    toc-depth: 2
+    number-sections: true
+    colorlinks: true
+    reference-doc: "style.docx"
+editor_options: 
+  chunk_output_type: inline
+execute:
+  echo: false
+  message: false
+  warning: false
+  class-output: 'r'
+  fig-width: 6.5
+---
+
+```{r proj_vars}
+# Project Variables ----
+# NOTE: change the variables in this section and run the rest of the script.
+
+# Forest name
+unit_name <- "Bridger-Teton NF"
+
+# Path to project directory
+proj_dir <- file.path("T:/FS/NFS/PSO/MPSG/Workspace/MVanScoyoc_GISLead/BT_RAP")
+# Figures directory path 
+fig_dir <- file.path(proj_dir, "figures")
+# Raster directory path
+raster_dir <- file.path(proj_dir, "rap_data")
+# Years of RAP data
+rap_yrs <- c(1986:2024)
+
+#-- Spatial variable
+# Project coordinate reference system (crs)
+target_crs <- "EPSG:4326" # crs of raster data# Path to geodatabase
+# Geodatabase path
+gdb_path <- file.path(proj_dir, "BT_RAP.gdb")
+# Area of Interest feature class names
+aoi_fc <- "btnf_admin_bndry"
+ecos_full_fc <- "btnf_nonforest_ecosystems"
+ecos_diss_fc <- "btnf_nf_ecos_dissolve"
+```
+
+```{r load_data, eval=TRUE}
+load(file.path(proj_dir, "RAP_summary_data.RData"))
+```
+
+```{r setup}
+## Packages ----
+#-- list of packages
+pkgs <- c(
+  "cowplot",     # Plot tools
+  "ggspatial",   # Map tools
+  "ggtext",      # Plot tools
+  "prettymapr",  # Map tools
+  "remotes",     # Download packages from GitHub
+  "scales",      # Map tools
+  "sf",          # Spatial vector data tools
+  "stringr",     # Text string tools 
+  "terra",       # Raster data tools
+  "tidyterra",   # Map tools
+  "tidyverse"    # Data management tools
+)
+
+#-- install packages
+inst_pkgs <- pkgs %in% rownames(installed.packages())
+# rapr package is on GitHub
+if (!"rapr" %in% inst_pkgs) remotes::install_github("brownag/rapr")
+# everything else is on CRAN
+if (any(inst_pkgs == FALSE)) {
+  install.packages(pkgs[!inst_pkgs], 
+                   lib =  .libPaths()[1], 
+                   repos = "https://cloud.r-project.org",
+                   type = 'source', 
+                   dependencies = TRUE, 
+                   quiet = TRUE)
+}
+
+#-- load packages
+invisible(lapply(pkgs, library, character.only = TRUE))
+
+
+# Functions ----
+
+#' Create change maps
+#' This function is used in an `lapply()` function to produce a list of change 
+#'     maps.
+#'
+#' @param lyr Name of raster layer. 
+#' @param sub_rast Subsetted raster
+#'
+#' @return A ggplot object.
+change_fig <- function(lyr, sub_rast, legend_title){
+  # Calculate 5 and 95th percentile
+  sub_rast_df <- as.data.frame(sub_rast)
+  lowbound <- quantile(sub_rast_df$mean, probs = 0.05, na.rm = T)[[1]]
+  upbound <- quantile(sub_rast_df$mean, probs = 0.95, na.rm = T)[[1]]
+  # Plot data
+  ggplot() +
+    tidyterra::geom_spatraster(data = sub_rast) +
+    scale_fill_gradient2(
+      low = "#DC050C", mid = "#FFFFFF", high = "#1965B0", 
+      na.value = "transparent",
+      midpoint = 0, limits = c(lowbound, upbound), oob = scales::squish,
+      name = expression(legend_title)
+    ) +
+    tidyterra::geom_spatvector(data = aoi_bndry, fill = "transparent", 
+                               color = "black") +
+    theme_minimal() +
+    ggspatial::annotation_scale(location = "br", width_hint = 0.5,
+                                pad_x = unit(0.1, "cm"), 
+                                pad_y = unit(0.1, "cm")) +
+    ggspatial::annotation_north_arrow(
+      location = "tr", style = ggspatial::north_arrow_minimal(),
+      height = unit(0.7, "cm"), width = unit(0.7, "cm"),
+      pad_x = unit(0.1, "cm"), pad_y = unit(0.1, "cm")
+    ) +
+    theme(legend.justification.right = "top", axis.text = element_blank(),
+          axis.ticks = element_blank(), axis.title = element_blank()) +
+    ggtitle(paste0(stringr::str_to_title(lyr)))
+}
+
+
+#' Concatinate a text string for use in a paragraph.
+#'
+#' This funciton places commans and "and" in a text sting vector so it reads 
+#'     well.
+#'
+#' @param text_vector A vector of text strings.
+#'
+#' @return A vector.
+commas_in_string <- function(text_vector){
+  # text_vector = ecosystems_df$BPS_NAME
+   if (length(text_vector) == 1){
+     text_vector
+     } else if (length(text_vector) > 2){
+       paste0(
+         str_c(text_vector[1:length(text_vector)-1], collapse = ", "),
+         ", and ",
+         text_vector[length(text_vector)]
+         )
+       } else if (length(text_vector == 2)){
+         paste0(text_vector[1], " and ", text_vector[2])
+       }
+  }
+```
+
+
+# Introduction
+
+The [Rangeland Analysis Platform](https://rangelands.app/) (RAP) hosts above-ground biomass and plant cover estimates derived from LANDSAT imagery.
+RAP above-ground biomass and plant cover data (USDA Agricultural Research Service 2025) from `r min(rap_yrs)` to `r max(rap_yrs)` were downloaded on 2025-05-20 using the `rpar` package (version 1.0.0; Brown 2025) in R (version `r paste(R.version$major, R.version$minor, sep = ".")`; R Core Team `r R.version$year`).
+
+
+# Area of Analysis
+
+```{r subset_vectors}
+alpine <- ecosystems[ecosystems$BT_Type == "Alpine", ]
+sage <- ecosystems[ecosystems$BT_Type == "Sagebrush", ]
+
+# Convert ecosystem feature class to a data frame 
+
+alpine_bps <- dplyr::filter(ecosystems_df, BT_Type == "Alpine") |> 
+  dplyr::pull(BPS_NAME)
+sage_bps <- dplyr::filter(ecosystems_df, BT_Type == "Sagebrush") |> 
+  dplyr::pull(BPS_NAME)
+```
+
+Alpine and sagebrush ecosystems were identified by `r unit_name` staff as non-forested systems in need of additional data to help inform decision making.
+LANDFIRE Bio-physical Setting (BpS) data were used to identify the spatial extent of these ecosystems on the Forest (Figure 1);
+`r commas_in_string(alpine_bps)` were selected for alpine ecosystems, and
+`r commas_in_string(sage_bps)` was selected for sagebrush ecosystems.
+RAP data were downloaded for the entire administrative forest boundary and then clipped to the alpine and sagebrush ecosystems for these analyses.
+
+```{r aoi_map}
+#| fig-cap: "Figure 1. Map of the Bridger-Teton NF showing alpine and sagebrush ecosystems."
+#| fig-alt: "Figure 1. Map of the Bridger-Teton NF showing alpine and sagebrush ecosystems."
+#| fig-height: 6.5
+
+# plot quick map
+ggplot() +
+  ggspatial::annotation_map_tile(type = "osm", zoom = 8, alpha = 0.3) +
+  geom_sf(data = ecosystems, aes(fill = BT_Type), color = "transparent") +
+  scale_fill_manual(values = c("#1965B0", "#DC050C")) +
+  geom_sf(data = aoi_bndry, fill = "transparent", color = "black") +
+  theme_minimal() +
+  annotation_scale(location = "br", width_hint = 0.5,
+                   pad_x = unit(0.1, "cm"), pad_y = unit(0.1, "cm")) +
+  annotation_north_arrow(location = "tr", style = north_arrow_minimal(),
+                         height = unit(0.7, "cm"), width = unit(0.7, "cm"),
+                         pad_x = unit(0.1, "cm"), pad_y = unit(0.1, "cm")) +
+  theme(legend.justification.right = "top") +
+  labs(title = paste0("Area of Interest - ", unit_name), 
+       fill = "Ecosystems") +
+  xlab("Longitude") + ylab("Latitude")
+```
+
+
+{{< pagebreak >}}
+# Biomass Data {#sec-biomass}
+
+Below is a figure of average (mean) annual above-ground forb and grass biomass (lbs/acre) by lifespan (annual/perennial) from `r min(rap_yrs)` to `r max(rap_yrs)` for alpine and sagebrush ecosystems (Figure 2).
+
+```{r bm_ts}
+#| fig-cap: "Figure 2. Time-series of mean percent cover by life for alpine and sagebrush ecosystems."
+#| fig-alt: "Figure 2. Time-series of mean annual forb and grass biomass by lifespan for alpine and sagebrush ecosystems."
+
+## Plot Time-series ----
+ggplot(mean_bm_ts, aes(x = year, y = mean)) +
+  geom_line() +
+  geom_smooth(method = "lm", se = FALSE, color = "red", size = 0.5) +  
+  facet_grid(type ~ ecosystem, scales = "free_y") +
+  labs(title = "Time-series of Mean Forb and Grass Biomass", 
+       x = "Year", y = "Biomass (lbs/acre)") +
+  theme_bw() +
+  theme(strip.background = element_rect(fill = 'white'))
+```
+
+```{r bm_change, results='hide'}
+#| output: false
+#| include: false
+
+#-- Alpine
+bm_alp_chng <- terra::rast(
+  file.path(
+    raster_dir,
+    paste0("RAP_biomass_change_alpine", min(rap_yrs), "_", max(rap_yrs), ".tif")
+    )
+  )
+# Create figures
+bm_alp_figs <- lapply(1:nlyr(bm_alp_chng), function(lyr){
+  sub_rast = bm_alp_chng[[lyr]]
+  my_var = stringr::str_split_i(names(sub_rast), "_", 2)
+  if(my_var == "annual") my_var = "Annual Forb & Grass"
+  if(my_var == "perennial") my_var = "Perennial Forb & Grass"
+  print(my_var)
+  p = change_fig(my_var, sub_rast, "Biomass (lbs/acre)")
+  return(p)
+})
+
+#-- Sage
+bm_sage_chng <- terra::rast(
+  file.path(
+    raster_dir,
+    paste0("RAP_biomass_change_sage", min(rap_yrs), "_", max(rap_yrs), ".tif"))
+)
+# Create figures
+bm_sage_figs <- lapply(1:nlyr(bm_sage_chng), function(lyr){
+  sub_rast = bm_sage_chng[[lyr]]
+  my_var = stringr::str_split_i(names(sub_rast), "_", 2)
+  if(my_var == "annual") my_var = "Annual Forb & Grass"
+  if(my_var == "perennial") my_var = "Perennial Forb & Grass"  
+  print(my_var)
+  p = change_fig(my_var, sub_rast, "Biomass (lbs/acre)")
+  return(p)
+})
+```
+
+```{r bm_alp_change}
+#| fig-cap: "Figure 3. Change in above ground carbon in alpine ecosystems."
+#| fig-alt: "Figure 3. Change in above ground carbon in alpine ecosystems."
+#| fig-height: 8
+
+# Final figure
+gridExtra::grid.arrange(
+  grobs = bm_alp_figs,
+  ncol = 1,
+  top = grid::textGrob("Change in Aboveground Carbon in Alpine Ecosystmes\n2020-2023 average minus 1990-1993 average",
+                       gp = grid::gpar(fontsize = 14, fontface = "bold"))
+)
+```
+
+```{r bm_sage_change}
+#| fig-cap: "Figure 4. Change in above ground carbon in sagebrush ecosystems."
+#| fig-alt: "Figure 4. Change in above ground carbon in sagebrush ecosystems."
+#| fig-height: 8.5
+
+# Final figure
+gridExtra::grid.arrange(
+  grobs = bm_sage_figs,
+  nrow = 2,
+  top = grid::textGrob("Change in Aboveground Carbon in Sagebrush Ecosystems\n2020-2023 average minus 1990-1993 average",
+                       gp = grid::gpar(fontsize = 14, fontface = "bold"))
+)
+```
+
+
+{{< pagebreak >}}
+# Cover Data {#sec-cover}
+
+Below is a figure of average (mean) percent vegetation cover by lifeform from `r min(rap_yrs)` to `r max(rap_yrs)` for alpine and sagebrush ecosystems (Figure 3).
+```{r cov_fig}
+#| fig-cap: "Figure 5. Time-series of mean percent cover by plant lifeform for alpine and sagebrush ecosystems."
+#| fig-alt: "Figure 5. Time-series of mean percent cover by plant lifeform for alpine and sagebrush ecosystems."
+#| fig-height: 6.5
+
+## Plot Time-series ----
+mean_cov_ts[mean_cov_ts$type == "Bare", "type"] <- "Bare Ground"
+ggplot(mean_cov_ts, aes(x = year, y = mean)) +
+  geom_line() +
+  geom_smooth(method = "lm", se = FALSE, color = "red", size = 0.5) +  
+  facet_grid(type ~ ecosystem, scales = "free_y") +
+  labs(title = "Time-series of Mean Annual Percent Cover", 
+       x = "Year", y = "Biomass (lbs/acre)") +
+  theme_bw() +
+  theme(strip.background = element_rect(fill = 'white'))
+```
+
+```{r cov_change, results='hide'}
+#| output: false
+#| include: false
+
+#-- Alpine
+cov_alp_chng <- terra::rast(
+  file.path(
+    raster_dir,
+    paste0("RAP_cover_change_alpine", min(rap_yrs), "_", max(rap_yrs), ".tif")
+    )
+  )
+# Create figures
+cov_alp_figs <- lapply(1:nlyr(cov_alp_chng), function(lyr){
+  sub_rast = cov_alp_chng[[lyr]]
+  my_var = stringr::str_split_i(names(sub_rast), "_", 2)
+  if(my_var == "annual") my_var = "Annual Forb & Grass"
+  if(my_var == "perennial") my_var = "Perennial Forb & Grass"
+  if(my_var == "bare") my_var = "Bare Ground"
+  print(my_var)
+  p = change_fig(my_var, sub_rast, "Percent Cover")
+  return(p)
+})
+
+#-- Sage
+cov_sage_chng <- terra::rast(
+  file.path(
+    raster_dir,
+    paste0("RAP_cover_change_sage", min(rap_yrs), "_", max(rap_yrs), ".tif"))
+)
+# Create figures
+cov_sage_figs <- lapply(1:nlyr(cov_sage_chng), function(lyr){
+  sub_rast = cov_sage_chng[[lyr]]
+  my_var = stringr::str_split_i(names(sub_rast), "_", 2)
+  if(my_var == "annual") my_var = "Annual Forb & Grass"
+  if(my_var == "perennial") my_var = "Perennial Forb & Grass"
+  if(my_var == "bare") my_var = "Bare Ground"
+  print(my_var)
+  p = change_fig(my_var, sub_rast, "Percent Cover")
+  return(p)
+})
+```
+
+```{r cov_alp_change}
+#| fig-cap: "Figure 6. Change in percent cover in alpine ecosystems."
+#| fig-alt: "Figure 6. Change in percent cover in alpine ecosystems."
+#| fig-height: 8.5
+
+# Final figure
+gridExtra::grid.arrange(
+  grobs = cov_alp_figs,
+  ncol = 2,
+  top = grid::textGrob("Change in Percent Cover in Alpine Ecosystmes\n2020-2023 average minus 1990-1993 average",
+                       gp = grid::gpar(fontsize = 14, fontface = "bold"))
+)
+```
+
+```{r cov_sage_change}
+#| fig-cap: "Figure 7. Change in percent cover in sagebrush ecosystems."
+#| fig-alt: "Figure 7. Change in percent cover in sagebrush ecosystems."
+#| fig-height: 8.5
+
+# Final figure
+gridExtra::grid.arrange(
+  grobs = cov_sage_figs,
+  ncol = 2,
+  top = grid::textGrob("Change in Percent Cover in Sagebrush Ecosystmes\n2020-2023 average minus 1990-1993 average",
+                       gp = grid::gpar(fontsize = 14, fontface = "bold"))
+)
+```
+
+
+# References
+
+Brown, A. (2025). rapr: Interface to Rangeland Analysis Platform (RAP) Vegetation Biomass and Cover Products. R package version 1.0.0. <http://github.com/brownag/rapr>.
+
+Posit team. 2024. RStudio: Integrated Development Environment for R. Posit Software, PBC, Boston, MA. URL <http://www.posit.co/>.
+
+R Core Team. `r R.version$year`. R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria. URL <https://www.R-project.org/>.
+
+USDA Agricultural Research Service. 2025. Rangeland Analysis Platform. <https://rangelands.app/>. Accessed 20 May 2025.
+
+
+# Session Info {#sec-session}
+
+This data-driven report was generated using [Quarto](https://quarto.org/) (version `r quarto::quarto_version()`) and R (version `r paste(R.version$major, R.version$minor, sep = ".")`; R Core Team `r R.version$year`) in RStudio (version 2024.4.2.764; Posit team 2024).
+The following output contains information about the environment this script was run in, including the operating system, R version, and packages used.
+
+```{r session, results='hold'}
+sessionInfo()
+```
