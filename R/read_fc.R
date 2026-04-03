@@ -1,3 +1,8 @@
+#' This script contains two functions:
+#'  -   read_fc()
+#'  -   view_layers() 
+
+
 #' Read feature class into R.
 #'
 #' This function uses the `sf` package to read a feature class into R from a
@@ -25,7 +30,29 @@
 #'                   crs = "NAD83")
 #' }
 read_fc <- function(lyr_name, dsn, crs = NULL){
-  fc = sf::read_sf(layer = lyr_name, dsn = dsn) |> sf::st_make_valid()
+  fc = sf::read_sf(layer = lyr_name, dsn = dsn) |> 
+    sf::st_make_valid() |> 
+    janitor::clean_names()
   if(!is.null(crs)){fc = sf::st_transform(fc, crs = crs)}
   return(fc)
+}
+
+
+#' View layers in a geodatabase
+#' 
+#' This function retuns a vecor of layer or feature class names in a geodatabase.
+#' 
+#' @param dsn Path to geodatabase.
+#' 
+#' @return A vector of layer or feature class names.
+#' 
+#' @export 
+#' 
+#' @examples
+#' \dontrun{
+#' gdb <- file.path("data", "MBF_SppEvals.gdb")
+#' view_layers(gdb)
+#' }
+view_layers <- function(dsn) {
+  sf::st_layers(dsn) |> dplyr::pull(name) |> sort()
 }

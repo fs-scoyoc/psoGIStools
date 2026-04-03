@@ -2,7 +2,12 @@
 % Please edit documentation in R/read_fc.R
 \name{read_fc}
 \alias{read_fc}
-\title{Read feature class into R.}
+\title{This script contains two functions:
+\itemize{
+\item read_fc()
+\item view_layers()
+Read feature class into R.
+}}
 \usage{
 read_fc(lyr_name, dsn, crs = NULL)
 }
