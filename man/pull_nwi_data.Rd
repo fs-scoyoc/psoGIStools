@@ -26,7 +26,7 @@ https://fwspublicservices.wim.usgs.gov/wetlandsmapservice/rest/, into R
 and clips them to an area of interest.
 }
 \examples{
-\donturn{
+\dontrun{
 library("psoGIStools")
 library("dplyr")
 

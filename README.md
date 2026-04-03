@@ -28,12 +28,12 @@ bug or have an idea for a feature, please submit an Issue at
 ## Installation
 
 ``` r
-devtools::install_github("fs-scoyoc/psoGIStools")
+remotes::install_github("fs-scoyoc/psoGIStools")
 ```
 
 ## List of Functions
 
--   `clip_sf()`: lip a `sf` object, just like in ArcGIS.
+-   `clip_sf()`: clip a `sf` object, just like in ArcGIS.
 
 -   `get_landfire()`: download LANDFIRE Existing Vegetation Type (250EVT) using 
 the `rlandfire` package.
@@ -44,4 +44,6 @@ the `rlandfire` package.
 Service ArcGIS REST Services.
 
 -   `read_fc()`: read a feature class into R from geodatabase.
+
+-   `view_layers()`: view layers, or feature class, names in a geodatabase.
 

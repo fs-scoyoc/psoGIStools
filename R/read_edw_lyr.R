@@ -28,7 +28,12 @@
 #' mbf <- read_edw_lyr("EDW_ForestSystemBoundaries_01") |> 
 #'   filter(forestname == "Medicine Bow National Forest")
 #' 
+#' # Read invasive plants data from internal FS REST service 
 #' inv_plant <- read_edw_lyr("EDW_BioInvasivePlant_01", layer = 1, service = "arcn") |> 
+#'   clip_sf(mbf)
+#' 
+#' # Read basic roads data from public FS REST service
+#' roads <- read_edw_lyr("EDW_RoadBasic_01") |> 
 #'   clip_sf(mbf)
 #' }
 read_edw_lyr <- function(data_name, layer = 0, service = "arcx", 

@@ -16,7 +16,7 @@
 #' @export
 #'
 #' @examples
-#' \donturn{
+#' \dontrun{
 #' library("psoGIStools")
 #' library("dplyr")
 #' 

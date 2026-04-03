@@ -1,2 +1,2 @@
 # List global varaiables
-utils::globalVariables(c("count", "lfrdb"))
+utils::globalVariables(c("count", "lfrdb", "name"))

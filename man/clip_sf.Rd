@@ -30,6 +30,7 @@ library("dplyr")
 # Fishlake National Forest Adminstrative Boundary
 fif <- read_edw_lyr("EDW_ForestSystemBoundaries_01") |>
   filter(forestname == "Fishlake National Forest")
+
 # Recreation Sites
 rec_sites <- read_edw_lyr("EDW_InfraRecreationSites_01")
 

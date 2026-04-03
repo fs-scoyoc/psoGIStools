@@ -21,7 +21,7 @@
 #' library("dplyr")
 #'
 #' #-- Read spatial data into R
-#' # Fishlake National Forest Adminstrative Boundary
+#' # Dixie National Forest Adminstrative Boundary
 #' dif <- read_edw_lyr("EDW_ForestSystemBoundaries_01") |>
 #'   filter(forestname == "Dixie National Forest")
 #' 
