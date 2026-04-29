@@ -5,9 +5,10 @@
 #'     This function has not been tested for more than one LANDFIRE product.
 #'
 #' @param aoi_poly Area of interest `sf` polygon object.
-#' @param lf_dir Directory path to save raster to.
+#' @param lf_dir Directory path to save raster to. Default is a temporary 
+#'    directory path using [tempdir()].
 #' @param email Email address. Passed on to [rlandfire::landfireAPIv2()].
-#' @param lf_products Vector of LANDFIRE products. Defult is `250EVT`. See 
+#' @param products Vector of LANDFIRE products. Defult is `LF2024_EVT`. See 
 #'     <https://lfps.usgs.gov/products> for available products. 
 #' @param res Raster resolution. Default is 30.
 #'
@@ -29,8 +30,8 @@
 #' evt_dif <- get_landfire(dif, lf_dir = file.path("data", "landfire"), 
 #'                         email = "your.name@usda.gov")
 #' }
-get_landfire <- function(aoi_poly, lf_dir, email, lf_products = "250EVT", 
-                         res = 30){
+get_landfire <- function(aoi_poly, lf_dir =  tempdir(), email, 
+                         products = "LF2024_EVT", res = 30){
   # aoi_poly = targets::tar_read(plan_area)
   # lf_dir = file.path("data", "LANDFIRE")
   # email = Sys.getenv("GBIF_EMAIL")
@@ -43,7 +44,7 @@ get_landfire <- function(aoi_poly, lf_dir, email, lf_products = "250EVT",
   # Generate AoA wkt string
   lf_aoi = rlandfire::getAOI(aoa_sf)
   # Pull EVT data from LANDFIRE API
-  resp = rlandfire::landfireAPIv2(products = lf_products, aoi = lf_aoi,
+  resp = rlandfire::landfireAPIv2(products = products, aoi = lf_aoi,
                                   email, resolution = res,
                                   path = tempfile(fileext = ".zip"),
                                   method = 'auto', verbose = FALSE)

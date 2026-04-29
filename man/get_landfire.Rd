@@ -4,16 +4,23 @@
 \alias{get_landfire}
 \title{Download LANDFIRE Existing Vegetation Type (250EVT)}
 \usage{
-get_landfire(aoi_poly, lf_dir, email, lf_products = "250EVT", res = 30)
+get_landfire(
+  aoi_poly,
+  lf_dir = tempdir(),
+  email,
+  products = "LF2024_EVT",
+  res = 30
+)
 }
 \arguments{
 \item{aoi_poly}{Area of interest \code{sf} polygon object.}
 
-\item{lf_dir}{Directory path to save raster to.}
+\item{lf_dir}{Directory path to save raster to. Default is a temporary
+directory path using \code{\link[=tempdir]{tempdir()}}.}
 
 \item{email}{Email address. Passed on to \code{\link[rlandfire:landfireAPIv2]{rlandfire::landfireAPIv2()}}.}
 
-\item{lf_products}{Vector of LANDFIRE products. Defult is \verb{250EVT}. See
+\item{products}{Vector of LANDFIRE products. Defult is \code{LF2024_EVT}. See
 \url{https://lfps.usgs.gov/products} for available products.}
 
 \item{res}{Raster resolution. Default is 30.}
