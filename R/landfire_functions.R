@@ -45,7 +45,7 @@ get_landfire <- function(aoi_poly, lf_dir =  tempdir(), email,
   lf_aoi = rlandfire::getAOI(aoa_sf)
   # Pull EVT data from LANDFIRE API
   resp = rlandfire::landfireAPIv2(products = products, aoi = lf_aoi,
-                                  email, resolution = res,
+                                  email = email, resolution = res,
                                   path = tempfile(fileext = ".zip"),
                                   method = 'auto', verbose = FALSE)
   # Unzip raster and save to lf_dir

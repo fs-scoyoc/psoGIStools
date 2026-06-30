@@ -37,7 +37,7 @@ pull_nwi_data <- function(aoi_poly, gdb_path = FALSE, suffix = FALSE){
     ) |>
       janitor::clean_names() |> 
       sf::st_make_valid() |> 
-      psoGIStools::clip_fc(aoi_poly)
+      clip_sf(aoi_poly)
   }
   message("Reading riparian data")
   riparian = read_nwi("Riparian")

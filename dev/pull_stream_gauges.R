@@ -83,15 +83,14 @@ pull_stream_gauges <- function(forest_name, buffer = TRUE, gdb_path = FALSE,
 }
 
 
-nfs_names <- psoGIStools::read_edw_lyr("EDW_ForestSystemBoundaries_01", 0) |> 
-  sf::st_drop_geometry() |> 
-  dplyr::select(region, forestname) |> 
-  dplyr::distinct() |> 
-  dplyr::arrange(region, forestname)
+# nfs_names <- psoGIStools::read_edw_lyr("EDW_ForestSystemBoundaries_01") |> 
+#   sf::st_drop_geometry() |> 
+#   dplyr::select(region, forestname) |> 
+#   dplyr::distinct() |> 
+#   dplyr::arrange(region, forestname)
 
 # read boundary from Forest Service EDW REST services
-nfs_bdy <- read_edw_lyr(map_name = "EDW_ForestSystemBoundaries_01",
-                        layer = 0) |> 
+nfs_bdy <- read_edw_lyr(map_name = "EDW_ForestSystemBoundaries_01") |> 
   dplyr::filter(forestname == "Lolo National Forest")
 
 # pull all USGS stream gauge locations within bounding box of NFS boundary
