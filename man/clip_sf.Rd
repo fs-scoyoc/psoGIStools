@@ -12,7 +12,7 @@ clip_sf(input_feature, clip_feature)
 \item{clip_feature}{Polygon feature (\code{sf}) used to clip \code{input_feature}.}
 }
 \value{
-An \link[sf:sf]{sf::sf} object.
+An \link[sf:sf]{sf} object.
 }
 \description{
 This function clips a \code{sf} object using \code{sf::st_intersection()}. First, this
@@ -39,5 +39,5 @@ fif_rec_sties <- clip_sf(rec_sites, fif)
 }
 }
 \seealso{
-\code{\link[=read_fc]{read_fc()}}, \code{\link[sf:geos_binary_ops]{sf::st_intersection()}}, \code{\link[sf:st_transform]{sf::st_transform()}}
+\code{\link[=read_fc]{read_fc()}}, \code{\link[sf:st_intersection]{sf::st_intersection()}}, \code{\link[sf:st_transform]{sf::st_transform()}}
 }

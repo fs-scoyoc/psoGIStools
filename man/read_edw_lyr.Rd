@@ -19,7 +19,7 @@ network for "arcn" to work.}
 (WGS 84).}
 }
 \value{
-An \link[sf:sf]{sf::sf} object or \link[terra:SpatRaster-class]{terra::SpatRaster}.
+An \link[sf:sf]{sf} object or \link[terra:SpatRaster-class]{terra::SpatRaster}.
 }
 \description{
 This function reads spatial features from the Forest Service ArcGIS REST

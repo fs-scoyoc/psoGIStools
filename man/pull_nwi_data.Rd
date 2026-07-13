@@ -16,7 +16,7 @@ is FALSE. IF FALSE, data will not be saved to a geodatabase.}
 writing to a geodatabase(e.g. "PlanArea").}
 }
 \value{
-A list of \link[sf:sf]{sf::sf} objects: \emph{riparian} and \emph{wetlands}.
+A list of \link[sf:sf]{sf} objects: \emph{riparian} and \emph{wetlands}.
 }
 \description{
 \strong{WARNING}. This function is under active development. This function read US

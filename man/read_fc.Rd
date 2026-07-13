@@ -19,7 +19,7 @@ read_fc(lyr_name, dsn, crs = NULL)
 \item{crs}{Target coordinate reference system (CRS). Either and
 \code{sf::st_crs()} object or accepted input string for \code{sf::st_crs()} (e.g.
 "WGS84" or "NAD83"). See \code{\link[sf:st_crs]{sf::st_crs()}} for more details. Default is NULL.
-If NULL, resulting \link[sf:sf]{sf::sf} object will not be transformed.}
+If NULL, resulting \link[sf:sf]{sf} object will not be transformed.}
 }
 \value{
 \code{sf} object
@@ -40,5 +40,5 @@ dat_sf <- read_fc(lyr_name = "feature_name",
 }
 }
 \seealso{
-\code{\link[sf:st_read]{sf::read_sf()}}, \code{\link[sf:st_transform]{sf::st_transform()}}
+\code{\link[sf:read_sf]{sf::read_sf()}}, \code{\link[sf:st_transform]{sf::st_transform()}}
 }

@@ -4,15 +4,16 @@
 
 Welcome to the Planning Service Organization (PSO; USDA Forest Service) 
 GIS Tools R package.
-This package has been developed by PSO staff to standardize common GIS tasks.
+This package has been developed by PSO staff to standardize common GIS tasks in 
+R.
 
 **Author:** [Matt Van Scoyoc](https://github.com/fs-scoyoc)
 
 **Maintainer:** [Matt Van Scoyoc](https://github.com/fs-scoyoc)
 
-**Version:** 0.0.1
+**Version:** 0.1.0
 
-**License:** Mit + file [LICENSE](https://github.com/fs-scoyoc/GIStools/blob/main/LICENSE.md)
+**License:** Mit + file [LICENSE](https://github.com/fs-scoyoc/psoGIStools/blob/main/LICENSE.md)
 
 **Depends:** R (\>= 4.1.0)
 
@@ -21,7 +22,7 @@ This package has been developed by PSO staff to standardize common GIS tasks.
 **Issues:** This package is under active development and changes often with out 
 warning. Functions may experience breaking changes at any time. If you find a 
 bug or have an idea for a feature, please submit an Issue at 
-<https://github.com/fs-scoyoc/GIStools/issues>.
+<https://github.com/fs-scoyoc/psoGIStools/issues>.
 
 **Documentation:** Just the man pages for now.
 
