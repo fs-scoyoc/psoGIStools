@@ -1,10 +1,11 @@
-#' Clip feature class to polygon
+#' Clip simple feature to polygon
 #'
-#' This function clips a `sf` object using `sf::st_intersection()`. First, this
-#'   function checks that the coordinate reference system (CRS) of the input
-#'   object is the same as the clipping object. If it is not, this function
-#'   transforms the clipping object to CRS of the input object using
-#'   `sf::st_transform()`before clipping. The output CRS is not changed.
+#' This function clips an `sf` object, just like ArcGIS, by using 
+#'     `sf::st_intersection()`. First, this function checks that the coordinate 
+#'     reference system (CRS) of the input object is the same as the clipping 
+#'     object. If it is not, this function transforms the clipping object to CRS 
+#'     of the input object using `sf::st_transform()` before clipping. The 
+#'     output CRS is not changed.
 #'
 #' @param input_feature Input spatial feature (`sf` object) to be clipped.
 #' @param clip_feature Polygon feature (`sf`) used to clip `input_feature`.

@@ -2,7 +2,7 @@
 % Please edit documentation in R/clip_sf.R
 \name{clip_sf}
 \alias{clip_sf}
-\title{Clip feature class to polygon}
+\title{Clip simple feature to polygon}
 \usage{
 clip_sf(input_feature, clip_feature)
 }
@@ -15,11 +15,12 @@ clip_sf(input_feature, clip_feature)
 An \link[sf:sf]{sf} object.
 }
 \description{
-This function clips a \code{sf} object using \code{sf::st_intersection()}. First, this
-function checks that the coordinate reference system (CRS) of the input
-object is the same as the clipping object. If it is not, this function
-transforms the clipping object to CRS of the input object using
-\code{sf::st_transform()}before clipping. The output CRS is not changed.
+This function clips an \code{sf} object, just like ArcGIS, by using
+\code{sf::st_intersection()}. First, this function checks that the coordinate
+reference system (CRS) of the input object is the same as the clipping
+object. If it is not, this function transforms the clipping object to CRS
+of the input object using \code{sf::st_transform()} before clipping. The
+output CRS is not changed.
 }
 \examples{
 \dontrun{

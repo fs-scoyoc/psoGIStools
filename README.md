@@ -36,6 +36,8 @@ remotes::install_github("fs-scoyoc/psoGIStools")
 
 -   `clip_sf()`: clip a `sf` object, just like in ArcGIS.
 
+-   `dissolve_sf()`: dissolve an `sf` object, just like in ArcGIS.
+
 -   `get_landfire()`: download LANDFIRE Existing Vegetation Type (250EVT) using 
 the `rlandfire` package.
 
