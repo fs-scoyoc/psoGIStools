@@ -10,5 +10,6 @@
 *.Rproj
 .Rproj.user/
 tmp/
-\tests
+/tests
 
+*.github

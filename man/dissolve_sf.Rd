@@ -4,20 +4,22 @@
 \alias{dissolve_sf}
 \title{Dissolve a simple feature}
 \usage{
-dissolve_sf(input_feature, var_names)
+dissolve_sf(input_feature, var_names = NULL)
 }
 \arguments{
 \item{input_feature}{Input spatial feature (\code{sf} object).}
 
-\item{var_names}{Vector of variables names to dissolve data by.}
+\item{var_names}{Optional. A vector of grouping variable names to dissolve
+data by. Default is NULL. If null, dissolve will not be grouped.}
 }
 \value{
 An \link[sf:sf]{sf} object.
 }
 \description{
-This function performs a dissolve, just like ArcGIS, by using
-\code{dplyr::summarise()} and grouping the summary by the variable names
-provided by the use.
+This function performs a dissolve, just like ArcGIS. This function has an
+optional grouping parameter, \emph{var_names}. When \emph{var_names} is used, the
+function uses \code{dplyr::summarise(..., .by = var_names)} to group the
+summary by the variable names provided by the use.
 }
 \examples{
 \dontrun{
