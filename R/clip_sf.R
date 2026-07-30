@@ -3,12 +3,13 @@
 #' This function clips an `sf` object, just like ArcGIS, by using 
 #'     `sf::st_intersection()`. First, this function checks that the coordinate 
 #'     reference system (CRS) of the input object is the same as the clipping 
-#'     object. If it is not, this function transforms the clipping object to CRS 
-#'     of the input object using `sf::st_transform()` before clipping. The 
-#'     output CRS is not changed.
+#'     object. If it is not, the CRS of the clipping object is transformed to 
+#'     the CRS of the input object using `sf::st_transform()` before clipping. 
+#'     The output object has the same CRS of the input object.
 #'
 #' @param input_feature Input spatial feature (`sf` object) to be clipped.
-#' @param clip_feature Polygon feature (`sf`) used to clip `input_feature`.
+#' @param clip_feature Polygon feature (`sf` object) used to clip 
+#'     `input_feature`.
 #'
 #' @return An [sf] object.
 #' @seealso [read_fc()], [sf::st_intersection()], [sf::st_transform()]
@@ -40,7 +41,8 @@ clip_sf <- function(input_feature, clip_feature){
 
   # Clip input layer
   sf_lyr = sf::st_intersection(input_feature, clip_feature) |>
-    dplyr::select(-tidyselect::any_of(colnames(clip_feature)))
+    dplyr::select(-tidyselect::any_of(colnames(clip_feature))) |> 
+    suppressWarnings()
 
   return(sf_lyr)
 }

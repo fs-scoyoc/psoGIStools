@@ -13,7 +13,7 @@ remotes::install_github("fs-scoyoc/mpsgSEdata")
 # use_mit_license() # set license
 
 # Workflow ----
-devtools::test()
+# devtools::test()
 
 devtools::document() # Update package documentation
 

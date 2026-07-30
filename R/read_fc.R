@@ -1,6 +1,6 @@
-#' This script contains two functions:
-#'  -   read_fc()
-#'  -   view_layers() 
+# This script contains two functions:
+#  -   read_fc()
+#  -   view_layers() 
 
 
 #' Read feature class into R.
