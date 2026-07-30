@@ -9,7 +9,8 @@ clip_sf(input_feature, clip_feature)
 \arguments{
 \item{input_feature}{Input spatial feature (\code{sf} object) to be clipped.}
 
-\item{clip_feature}{Polygon feature (\code{sf}) used to clip \code{input_feature}.}
+\item{clip_feature}{Polygon feature (\code{sf} object) used to clip
+\code{input_feature}.}
 }
 \value{
 An \link[sf:sf]{sf} object.
@@ -18,9 +19,9 @@ An \link[sf:sf]{sf} object.
 This function clips an \code{sf} object, just like ArcGIS, by using
 \code{sf::st_intersection()}. First, this function checks that the coordinate
 reference system (CRS) of the input object is the same as the clipping
-object. If it is not, this function transforms the clipping object to CRS
-of the input object using \code{sf::st_transform()} before clipping. The
-output CRS is not changed.
+object. If it is not, the CRS of the clipping object is transformed to
+the CRS of the input object using \code{sf::st_transform()} before clipping.
+The output object has the same CRS of the input object.
 }
 \examples{
 \dontrun{
