@@ -54,5 +54,5 @@ read_fc <- function(lyr_name, dsn, crs = NULL){
 #' view_layers(gdb)
 #' }
 view_layers <- function(dsn) {
-  sf::st_layers(dsn) |> dplyr::pull(name) |> sort()
+  sf::st_layers(dsn) |> dplyr::pull(name) |> sort() |> suppressWarnings()
 }

@@ -34,6 +34,8 @@ remotes::install_github("fs-scoyoc/psoGIStools")
 
 ## List of Functions
 
+-   `calculate_acres`: calculate geodesic or planar acres of a polygon.
+
 -   `clip_sf()`: clip a `sf` object, just like in ArcGIS.
 
 -   `dissolve_sf()`: dissolve an `sf` object, just like in ArcGIS.
